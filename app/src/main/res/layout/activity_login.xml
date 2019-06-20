@@ -1,11 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_dark"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/dark_bg"
     tools:context=".activities.LoginActivity">
 
+    <com.application.fmt.customViews.customFontViews.CustomTextviewBold
+        android:id="@+id/headingTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/ten_dp"
+        android:padding="@dimen/five_dp"
+        android:text="@string/i_love_her_i_submit_to_him"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/twenty_sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/headingLoveLineIV"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/fourty_dp"
+        android:padding="@dimen/five_dp"
+        android:src="@drawable/ic_love_line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headingTV"
+        android:contentDescription="TODO" />
+
+
+    <ImageView
+        android:id="@+id/logoIV"
+        android:layout_width="@dimen/two_hundred_fifty_dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_logo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headingLoveLineIV" />
+
+
+    <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
+        android:id="@+id/signInTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/ten_dp"
+        android:text="@string/sign_in"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/eighteen_sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoIV" />
+
+    <View
+        android:id="@+id/bottomWhiteLine"
+        android:layout_width="@dimen/fifty_dp"
+        android:layout_height="1dp"
+        android:background="@android:color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signInTV" />
 </androidx.constraintlayout.widget.ConstraintLayout>
