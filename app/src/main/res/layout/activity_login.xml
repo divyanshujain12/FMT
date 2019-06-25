@@ -1,46 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/ten_dp"
     android:background="@drawable/dark_bg"
     tools:context=".activities.LoginActivity">
 
-    <com.application.fmt.customViews.customFontViews.CustomTextviewBold
-        android:id="@+id/headingTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/ten_dp"
-        android:padding="@dimen/five_dp"
-        android:text="@string/i_love_her_i_submit_to_him"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/twenty_sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/headingLoveLineIV"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/fourty_dp"
-        android:padding="@dimen/five_dp"
-        android:src="@drawable/ic_love_line"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headingTV"
-        android:contentDescription="TODO" />
-
-
-    <ImageView
-        android:id="@+id/logoIV"
-        android:layout_width="@dimen/two_hundred_fifty_dp"
-        android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_logo"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headingLoveLineIV" />
+    <include layout="@layout/login_header" />
 
 
     <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
@@ -50,7 +18,7 @@
         android:padding="@dimen/ten_dp"
         android:text="@string/sign_in"
         android:textAllCaps="true"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimary"
         android:textSize="@dimen/eighteen_sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -64,4 +32,77 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/signInTV" />
+
+    <com.application.fmt.customViews.customFontViews.CustomEditTextRegular
+        android:id="@+id/usernameET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fourty_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:background="@drawable/white_border_bg"
+        android:hint="@string/user_name_or_phone_number"
+        android:padding="@dimen/ten_dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white_hint"
+        app:layout_constraintTop_toBottomOf="@id/bottomWhiteLine" />
+
+    <LinearLayout
+        android:id="@+id/actionLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fourty_dp"
+        android:layout_marginStart="@dimen/twenty_dp"
+        android:layout_marginEnd="@dimen/twenty_dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/usernameET">
+
+        <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:padding="@dimen/five_dp"
+            android:text="@string/forgot_password"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sixteen_sp" />
+
+        <com.application.fmt.customViews.customFontViews.CustomButtonRegular
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:background="@drawable/white_fill_bg"
+            android:text="@string/submit" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fifty_dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/actionLL">
+
+        <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/five_dp"
+            android:paddingBottom="@dimen/five_dp"
+            android:text="@string/don_t_have_an_account"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fourteen_sp" />
+
+        <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/five_dp"
+            android:paddingBottom="@dimen/five_dp"
+            android:text="@string/sign_up"
+            android:clickable="true"
+            android:onClick="goToSignup"
+            android:layout_marginLeft="@dimen/two_dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/fourteen_sp" />
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#87CEEB</color>
-    <color name="colorPrimaryDark">#87CEEB</color>
+    <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#D81B60</color>
     <color name="green">#008000</color>
     <color name="btn_secondary_yellow">#DA8A00</color>
     <color name="error_tooltip">#F04A4A</color>
+    <color name="white">#FFF</color>
+    <color name="white_hint">#88FFFFFF</color>
 </resources>

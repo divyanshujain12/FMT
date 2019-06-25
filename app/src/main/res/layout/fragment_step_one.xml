@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.application.fmt.viewModels.signupViewModels.StepOneViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/dark_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/ten_dp"
+        tools:context=".fragments.signupFragments.StepOne">
+
+        <include layout="@layout/signup_header" />
+
+        <com.application.fmt.customViews.customFontViews.CustomEditTextRegular
+            android:id="@+id/usernameET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:layout_marginEnd="@dimen/twenty_dp"
+            android:background="@drawable/white_border_bg"
+            android:hint="@string/username"
+            android:inputType="text"
+            android:padding="@dimen/ten_dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white_hint" />
+
+        <com.application.fmt.customViews.customFontViews.CustomEditTextRegular
+            android:id="@+id/emailET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:layout_marginEnd="@dimen/twenty_dp"
+            android:background="@drawable/white_border_bg"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/ten_dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white_hint" />
+
+        <com.application.fmt.customViews.customFontViews.CustomTextviewBold
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:layout_marginEnd="@dimen/twenty_dp"
+            android:text="@string/please_select_your_gender"
+            android:textColor="@color/white"
+            android:textSize="@dimen/eighteen_sp" />
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginTop="@dimen/five_dp"
+            android:layout_marginEnd="@dimen/twenty_dp"
+            android:orientation="horizontal">
+
+            <com.application.fmt.customViews.customFontViews.CustomRadioButtonRegular
+                android:id="@+id/radio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/white"
+                android:checked="true"
+                android:padding="@dimen/five_dp"
+                android:text="@string/male"
+                android:textColor="@color/white" />
+
+            <com.application.fmt.customViews.customFontViews.CustomRadioButtonRegular
+                android:id="@+id/radio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty_dp"
+                android:buttonTint="@color/white"
+                android:padding="@dimen/five_dp"
+                android:text="@string/female"
+                android:textColor="@color/white" />
+        </RadioGroup>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/ageSP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/twenty_dp"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:layout_marginEnd="@dimen/twenty_dp"
+            android:background="@drawable/white_border_bg"
+            android:entries="@array/age_array" />
+
+        <com.application.fmt.customViews.customFontViews.CustomButtonRegular
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:clickable="true"
+            android:minEms="10"
+            android:onClick="@{() ->viewModel.onNextClick()}"
+            android:text="@string/next" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/five_dp"
+                android:paddingBottom="@dimen/five_dp"
+                android:text="@string/already_a_member"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fourteen_sp" />
+
+            <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/two_dp"
+                android:paddingTop="@dimen/five_dp"
+                android:paddingBottom="@dimen/five_dp"
+                android:text="@string/sign_in"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/fourteen_sp" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
