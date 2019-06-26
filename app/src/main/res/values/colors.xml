@@ -8,4 +8,5 @@
     <color name="error_tooltip">#F04A4A</color>
     <color name="white">#FFF</color>
     <color name="white_hint">#88FFFFFF</color>
+    <color name="dark_grey">#3B3B3B</color>
 </resources>

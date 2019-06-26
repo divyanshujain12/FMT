@@ -71,6 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="4"
             android:background="@drawable/white_fill_bg"
+            android:onClick="goToHome"
             android:text="@string/submit" />
     </LinearLayout>
 
