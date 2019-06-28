@@ -8,16 +8,16 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.application.fmt.R;
 import com.application.fmt.databinding.FragmentStepTwoBinding;
+import com.application.fmt.globalClasses.BaseFragment;
 import com.application.fmt.utils.CommonUiUtils;
 import com.application.fmt.viewModels.signupViewModels.StepTwoViewModel;
 
 
-public class StepTwo extends Fragment {
+public class StepTwo extends BaseFragment {
 
     private FragmentStepTwoBinding fragmentStepTwoBinding;
     private StepTwoViewModel stepTwoViewModel;
@@ -39,6 +39,7 @@ public class StepTwo extends Fragment {
         fragmentStepTwoBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_step_two, container, false);
         stepTwoViewModel = ViewModelProviders.of(this).get(StepTwoViewModel.class);
         fragmentStepTwoBinding.setViewModel(stepTwoViewModel);
+        setBaseAndroidViewModel(stepTwoViewModel);
         return fragmentStepTwoBinding.getRoot();
     }
 

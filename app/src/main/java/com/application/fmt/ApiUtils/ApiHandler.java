@@ -2,12 +2,10 @@ package com.application.fmt.ApiUtils;
 
 import com.application.fmt.Models.CheckOnlyModel;
 import com.application.fmt.utils.NetworkError;
+import com.google.gson.JsonObject;
 
 import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class ApiHandler {
@@ -20,32 +18,14 @@ public class ApiHandler {
     private ApiHandler() {
     }
 
-    public Subscription validateEmailAddress(GetDataService getDataService, String requestJson, final GetNonArrayResponseCallback getNonArrayResponseCallback) {
+    public Observable<CheckOnlyModel> validateEmailAddress(GetDataService getDataService, JsonObject requestJson) {
         return getDataService.checkEmailExist(requestJson)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .onErrorResumeNext(new Func1<Throwable, Observable<? extends CheckOnlyModel>>() {
-                    @Override
-                    public Observable<? extends CheckOnlyModel> call(Throwable throwable) {
-                        return Observable.error(throwable);
-                    }
-                }).subscribe(new Subscriber<CheckOnlyModel>() {
-                    @Override
-                    public void onCompleted() {
+                .observeOn(AndroidSchedulers.mainThread());
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        getNonArrayResponseCallback.onError(new NetworkError(e));
-                    }
-
-                    @Override
-                    public void onNext(CheckOnlyModel checkOnlyModel) {
-                        getNonArrayResponseCallback.onSuccess(checkOnlyModel);
-                    }
-                });
     }
+
+
 
 
     public interface GetNonArrayResponseCallback {
@@ -53,4 +33,7 @@ public class ApiHandler {
 
         void onError(NetworkError networkError);
     }
+
+
+
 }

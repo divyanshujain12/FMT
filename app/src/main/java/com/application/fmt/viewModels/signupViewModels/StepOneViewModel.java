@@ -6,23 +6,24 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 
 import com.application.fmt.ApiUtils.ApiHandler;
 import com.application.fmt.Constants.JsonKeys;
+import com.application.fmt.Models.CheckOnlyModel;
 import com.application.fmt.Models.SignupRequestModel;
 import com.application.fmt.activities.SignupActivity;
 import com.application.fmt.customViews.customFontViews.CustomTextviewRegular;
+import com.application.fmt.globalClasses.BaseAndroidViewModel;
 import com.application.fmt.globalClasses.MyApp;
 import com.application.fmt.utils.NetworkError;
+import com.application.fmt.utils.RxBus;
+import com.google.gson.JsonObject;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import rx.Subscription;
+import rx.Observable;
+import rx.Observer;
 import rx.subscriptions.CompositeSubscription;
 
-public class StepOneViewModel extends AndroidViewModel implements ApiHandler.GetNonArrayResponseCallback {
+public class StepOneViewModel extends BaseAndroidViewModel implements ApiHandler.GetNonArrayResponseCallback {
     private String LOG_TAG = StepOneViewModel.class.getName();
     private SignupActivity signupActivity;
 
@@ -37,6 +38,7 @@ public class StepOneViewModel extends AndroidViewModel implements ApiHandler.Get
 
     }
 
+
     public SignupRequestModel getSignupRequestModel() {
         return signupRequestModel;
     }
@@ -48,7 +50,6 @@ public class StepOneViewModel extends AndroidViewModel implements ApiHandler.Get
     public void onNextClick() {
         Log.d(LOG_TAG, String.valueOf(signupRequestModel));
         hitCheckEmailApi();
-        //signupActivity.getWizard().navigateNext();
     }
 
     public void onSelectItem(AdapterView<?> parent, View view, int pos, long id) {
@@ -59,31 +60,58 @@ public class StepOneViewModel extends AndroidViewModel implements ApiHandler.Get
 
     private void hitCheckEmailApi() {
         if (signupRequestModel.validationForSignUpStepOne(getApplication())) {
-            Subscription subscription = ApiHandler.getInstance().validateEmailAddress(((MyApp) getApplication()).getGetDataService(), creteRequestJson(), this);
-            compositeSubscription.add(subscription);
+            Observable<CheckOnlyModel> checkOnlyModelObservable = ApiHandler.getInstance().validateEmailAddress(((MyApp) getApplication()).getGetDataService(), creteRequestJson());
+            checkOnlyModelObservable.subscribe(new Observer<CheckOnlyModel>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onNext(CheckOnlyModel checkOnlyModel) {
+                    if (checkOnlyModel.getSuccess()) {
+                        RxBus.getInstance().publish(signupRequestModel);
+                        signupActivity.getWizard().navigateNext();
+                    }
+                }
+            });
+            //compositeSubscription.add(subscription);
         }
     }
 
-    private String creteRequestJson() {
-        JSONObject outerObject = new JSONObject();
-        try {
-            JSONObject innerObject = new JSONObject();
-            innerObject.put(JsonKeys.EMAIL, signupRequestModel.getEmail());
-            outerObject.put(JsonKeys.USER, innerObject);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    private JsonObject creteRequestJson() {
+        JsonObject outerObject = new JsonObject();
 
-        return outerObject.toString();
+        JsonObject innerObject = new JsonObject();
+        innerObject.addProperty(JsonKeys.EMAIL, signupRequestModel.getEmail());
+        outerObject.add(JsonKeys.USER, innerObject);
+
+
+        return outerObject;
     }
 
     @Override
     public <T> void onSuccess(T dataArray) {
-
+        if (((CheckOnlyModel) dataArray).getSuccess()) {
+            RxBus.getInstance().publish(signupRequestModel);
+            signupActivity.getWizard().navigateNext();
+        }
     }
 
     @Override
     public void onError(NetworkError networkError) {
 
+    }
+
+    @Override
+    public void onActivityDestroy() {
+        if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) {
+            compositeSubscription.unsubscribe();
+        }
     }
 }

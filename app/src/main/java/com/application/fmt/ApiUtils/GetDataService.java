@@ -4,7 +4,10 @@ import com.application.fmt.Models.CheckOnlyModel;
 import com.application.fmt.Models.CountriesModel;
 import com.application.fmt.Models.LoginUserProfileModel;
 import com.application.fmt.Models.SignupUserProfileModel;
+import com.google.gson.JsonObject;
 
+
+import org.json.JSONObject;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -15,7 +18,7 @@ import rx.Observable;
 public interface GetDataService {
     @Headers("Content-Type: application/json")
     @POST("email_exists")
-    Observable<CheckOnlyModel> checkEmailExist(@Body String requestJson);
+    Observable<CheckOnlyModel> checkEmailExist(@Body JsonObject requestJson);
 
     @Headers("Content-Type: application/json")
     @POST("mobile_exists")

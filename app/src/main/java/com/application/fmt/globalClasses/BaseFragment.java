@@ -1,8 +1,9 @@
 package com.application.fmt.globalClasses;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseFragment extends Fragment {
+
 
     BaseAndroidViewModel baseAndroidViewModel;
 
@@ -12,7 +13,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         this.baseAndroidViewModel.onActivityDestroy();
     }

@@ -14,10 +14,11 @@ import androidx.lifecycle.ViewModelProviders;
 import com.application.fmt.R;
 import com.application.fmt.activities.SignupActivity;
 import com.application.fmt.databinding.FragmentStepOneBinding;
+import com.application.fmt.globalClasses.BaseFragment;
 import com.application.fmt.utils.CommonUiUtils;
 import com.application.fmt.viewModels.signupViewModels.StepOneViewModel;
 
-public class StepOne extends Fragment {
+public class StepOne extends BaseFragment {
     public StepOne() {
 
     }
@@ -35,11 +36,13 @@ public class StepOne extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         fragmentStepOneBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_step_one, container, false);
         stepOneViewModel = ViewModelProviders.of(this).get(StepOneViewModel.class);
         stepOneViewModel.setSignupActivity(((SignupActivity) getActivity()));
         fragmentStepOneBinding.setViewModel(stepOneViewModel);
+
+        setBaseAndroidViewModel(stepOneViewModel);
         return fragmentStepOneBinding.getRoot();
     }
 
