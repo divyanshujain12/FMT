@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 
 import com.application.fmt.ApiUtils.ApiHandler;
+import com.application.fmt.Models.CountriesModel;
 import com.application.fmt.Models.SignupRequestModel;
 import com.application.fmt.globalClasses.BaseAndroidViewModel;
 import com.application.fmt.utils.NetworkError;
@@ -18,10 +19,12 @@ public class StepTwoViewModel extends BaseAndroidViewModel implements ApiHandler
 
     private Disposable disposable;
     private SignupRequestModel signupRequestModel;
+    private CountriesModel countriesModel;
 
     public StepTwoViewModel(@NonNull Application application) {
         super(application);
         getSignupRequestModel();
+        getCountriesFromServer();
     }
 
 
@@ -31,21 +34,38 @@ public class StepTwoViewModel extends BaseAndroidViewModel implements ApiHandler
             public void accept(Object o) throws Exception {
                 if (o instanceof SignupRequestModel) {
                     signupRequestModel = (SignupRequestModel) o;
+                    disposeDisposable();
                 }
+            }
+        });
+    }
+
+    private void disposeDisposable() {
+        if (disposable != null && !disposable.isDisposed())
+            disposable.dispose();
+    }
+
+    private void getCountriesFromServer() {
+        ApiHandler.getInstance(getApplication()).getCountries(CountriesModel.class, new ApiHandler.GetNonArrayResponseCallback() {
+            @Override
+            public <T> void onSuccess(T data) {
+                RxBus.getInstance().publish(data);
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+
             }
         });
     }
 
     @Override
     public void onActivityDestroy() {
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
-        }
+        disposeDisposable();
     }
 
-
     @Override
-    public <T> void onSuccess(T dataArray) {
+    public <T> void onSuccess(T data) {
 
     }
 

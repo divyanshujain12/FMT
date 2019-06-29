@@ -3,6 +3,7 @@ package com.application.fmt.Models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CountriesModel {
@@ -12,7 +13,7 @@ public class CountriesModel {
     private Boolean success;
     @SerializedName("countries")
     @Expose
-    private List<Country> countries = null;
+    private ArrayList<Country> countries = null;
 
     public Boolean getSuccess() {
         return success;
@@ -22,11 +23,11 @@ public class CountriesModel {
         this.success = success;
     }
 
-    public List<Country> getCountries() {
+    public ArrayList<Country> getCountries() {
         return countries;
     }
 
-    public void setCountries(List<Country> countries) {
+    public void setCountries(ArrayList<Country> countries) {
         this.countries = countries;
     }
 }

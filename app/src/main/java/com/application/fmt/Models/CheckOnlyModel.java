@@ -1,9 +1,11 @@
 package com.application.fmt.Models;
 
+import androidx.databinding.BaseObservable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CheckOnlyModel {
+public class CheckOnlyModel extends BaseObservable {
 
     @SerializedName("success")
     @Expose

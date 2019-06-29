@@ -14,13 +14,11 @@ import com.application.fmt.Models.SignupRequestModel;
 import com.application.fmt.activities.SignupActivity;
 import com.application.fmt.customViews.customFontViews.CustomTextviewRegular;
 import com.application.fmt.globalClasses.BaseAndroidViewModel;
-import com.application.fmt.globalClasses.MyApp;
 import com.application.fmt.utils.NetworkError;
 import com.application.fmt.utils.RxBus;
 import com.google.gson.JsonObject;
 
-import rx.Observable;
-import rx.Observer;
+import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 public class StepOneViewModel extends BaseAndroidViewModel implements ApiHandler.GetNonArrayResponseCallback {
@@ -60,44 +58,30 @@ public class StepOneViewModel extends BaseAndroidViewModel implements ApiHandler
 
     private void hitCheckEmailApi() {
         if (signupRequestModel.validationForSignUpStepOne(getApplication())) {
-            Observable<CheckOnlyModel> checkOnlyModelObservable = ApiHandler.getInstance().validateEmailAddress(((MyApp) getApplication()).getGetDataService(), creteRequestJson());
-            checkOnlyModelObservable.subscribe(new Observer<CheckOnlyModel>() {
-                @Override
-                public void onCompleted() {
-
-                }
-
-                @Override
-                public void onError(Throwable e) {
-
-                }
-
-                @Override
-                public void onNext(CheckOnlyModel checkOnlyModel) {
-                    if (checkOnlyModel.getSuccess()) {
-                        RxBus.getInstance().publish(signupRequestModel);
-                        signupActivity.getWizard().navigateNext();
-                    }
-                }
-            });
-            //compositeSubscription.add(subscription);
+            Subscription subscription = ApiHandler.getInstance(getApplication()).validateEmailAddress(creteRequestJson(), CheckOnlyModel.class, this);
+            compositeSubscription.add(subscription);
         }
     }
 
     private JsonObject creteRequestJson() {
         JsonObject outerObject = new JsonObject();
-
         JsonObject innerObject = new JsonObject();
         innerObject.addProperty(JsonKeys.EMAIL, signupRequestModel.getEmail());
         outerObject.add(JsonKeys.USER, innerObject);
-
 
         return outerObject;
     }
 
     @Override
-    public <T> void onSuccess(T dataArray) {
-        if (((CheckOnlyModel) dataArray).getSuccess()) {
+    public void onActivityDestroy() {
+        if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) {
+            compositeSubscription.unsubscribe();
+        }
+    }
+
+    @Override
+    public <T> void onSuccess(T data) {
+        if (((CheckOnlyModel) data).getSuccess()) {
             RxBus.getInstance().publish(signupRequestModel);
             signupActivity.getWizard().navigateNext();
         }
@@ -106,12 +90,5 @@ public class StepOneViewModel extends BaseAndroidViewModel implements ApiHandler
     @Override
     public void onError(NetworkError networkError) {
 
-    }
-
-    @Override
-    public void onActivityDestroy() {
-        if (compositeSubscription != null && !compositeSubscription.isUnsubscribed()) {
-            compositeSubscription.unsubscribe();
-        }
     }
 }

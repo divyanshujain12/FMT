@@ -1,9 +1,12 @@
 package com.application.fmt.ApiUtils;
 
+import androidx.databinding.BaseObservable;
+
 import com.application.fmt.Models.CheckOnlyModel;
 import com.application.fmt.Models.CountriesModel;
 import com.application.fmt.Models.LoginUserProfileModel;
 import com.application.fmt.Models.SignupUserProfileModel;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 
@@ -18,24 +21,24 @@ import rx.Observable;
 public interface GetDataService {
     @Headers("Content-Type: application/json")
     @POST("email_exists")
-    Observable<CheckOnlyModel> checkEmailExist(@Body JsonObject requestJson);
+    Observable<JsonElement> checkEmailExist(@Body JsonObject requestJson);
 
     @Headers("Content-Type: application/json")
     @POST("mobile_exists")
-    Observable<CheckOnlyModel> checkMobileExist(@Body String requestJson);
+    Observable<JsonElement> checkMobileExist(@Body String requestJson);
 
     @GET("country_list")
-    Observable<CountriesModel> getCountries();
+    Observable<JsonElement> getCountries();
 
     @Headers("Content-Type: application/json")
     @POST("otp")
-    Observable<CheckOnlyModel> sendOtp(@Body String requestJson);
+    Observable<JsonElement> sendOtp(@Body String requestJson);
 
     @Headers("Content-Type: application/json")
     @POST("users")
-    Observable<SignupUserProfileModel> register(@Body String requestJson);
+    Observable<JsonElement> register(@Body String requestJson);
 
     @Headers("Content-Type: application/json")
     @POST("sign_in")
-    Observable<LoginUserProfileModel> login(@Body String requestJson);
+    Observable<JsonElement> login(@Body String requestJson);
 }

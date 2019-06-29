@@ -51,5 +51,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.github.nisrulz:validatetor:1.0.0'
 
+    implementation 'com.github.VladimirWrites:Lemniscate:1.4.5'
     implementation 'me.panavtec:wizard:1.2'
 }
