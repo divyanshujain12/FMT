@@ -25,20 +25,20 @@ public interface GetDataService {
 
     @Headers("Content-Type: application/json")
     @POST("mobile_exists")
-    Observable<JsonElement> checkMobileExist(@Body String requestJson);
+    Observable<JsonElement> checkMobileExist(@Body JsonObject requestJson);
 
     @GET("country_list")
     Observable<JsonElement> getCountries();
 
     @Headers("Content-Type: application/json")
     @POST("otp")
-    Observable<JsonElement> sendOtp(@Body String requestJson);
+    Observable<JsonElement> sendOtp(@Body JsonObject requestJson);
 
     @Headers("Content-Type: application/json")
     @POST("users")
-    Observable<JsonElement> register(@Body String requestJson);
+    Observable<JsonElement> register(@Body JsonObject requestJson);
 
     @Headers("Content-Type: application/json")
     @POST("sign_in")
-    Observable<JsonElement> login(@Body String requestJson);
+    Observable<JsonElement> login(@Body JsonObject requestJson);
 }

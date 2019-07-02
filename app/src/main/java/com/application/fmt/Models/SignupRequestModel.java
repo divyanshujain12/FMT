@@ -25,7 +25,7 @@ public class SignupRequestModel extends BaseObservable {
     private String mobile;
     @SerializedName("gender")
     @Expose
-    private Boolean gender;
+    private boolean gender;
     @SerializedName("age")
     @Expose
     private String age;
@@ -140,10 +140,30 @@ public class SignupRequestModel extends BaseObservable {
         String errorMsg = "";
         if (validateTor.isEmpty(name)) {
             errorMsg = ErrorMessages.ERROR_NAME_EMPTY;
-        } else if (!validateTor.isEmpty(email)) {
+        } else if (validateTor.isEmpty(email)) {
             errorMsg = ErrorMessages.ERROR_EMAIL_EMPTY;
         } else if (!validateTor.isEmail(email)) {
             errorMsg = ErrorMessages.ERROR_INVALID_EMAIL;
+        }
+        if (errorMsg.length() > 0) {
+            Toast.makeText(app.getApplicationContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        }
+        return errorMsg.length() <= 0;
+    }
+
+    public boolean validationForSignUpStepTwo(Application app) {
+        ValidateTor validateTor = new ValidateTor();
+        String errorMsg = "";
+        if (validateTor.isEmpty(name)) {
+            errorMsg = ErrorMessages.ERROR_NAME_EMPTY;
+        } else if (validateTor.isEmpty(email)) {
+            errorMsg = ErrorMessages.ERROR_EMAIL_EMPTY;
+        } else if (!validateTor.isEmail(email)) {
+            errorMsg = ErrorMessages.ERROR_INVALID_EMAIL;
+        } else if (!validateTor.isEmpty(mobile)) {
+            errorMsg = ErrorMessages.ERROR_NUMBER_BLANK;
+        } else if (!validateTor.isPhoneNumber(mobile)) {
+            errorMsg = ErrorMessages.ERROR_INVALID_NUMBER;
         }
         if (errorMsg.length() > 0) {
             Toast.makeText(app.getApplicationContext(), errorMsg, Toast.LENGTH_SHORT).show();

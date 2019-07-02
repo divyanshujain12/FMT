@@ -41,4 +41,6 @@
     <string name="contact_us">Contact Us</string>
     <string name="home">Home</string>
     <string name="about_us">About Us</string>
+    <string name="otp">OTP</string>
+    <string name="enter_verification_code">Enter Verification Code</string>
 </resources>

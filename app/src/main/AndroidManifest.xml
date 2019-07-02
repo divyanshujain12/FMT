@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.application.fmt">
-<uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".globalClasses.MyApp"
         android:allowBackup="true"
@@ -13,21 +15,20 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.LoginOtpActivity"/>
+        <activity android:name=".activities.SignupOtpActivity"></activity>
+        <activity android:name=".activities.LoginOtpActivity" />
         <activity
             android:name=".activities.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.SignupActivity" >
+        <activity android:name=".activities.SignupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LoginActivity">
-
-        </activity>
+        <activity android:name=".activities.LoginActivity"></activity>
         <activity android:name=".activities.MainActivity" />
     </application>
 

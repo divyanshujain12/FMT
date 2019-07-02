@@ -2,7 +2,6 @@ package com.application.fmt.ApiUtils;
 
 import android.app.Application;
 
-import com.application.fmt.Models.CountriesModel;
 import com.application.fmt.globalClasses.MyApp;
 import com.application.fmt.utils.NetworkError;
 import com.google.gson.Gson;
@@ -36,7 +35,11 @@ public class ApiHandler {
     }
 
     public Subscription getCountries(Class targetClass, GetNonArrayResponseCallback getNonArrayResponseCallback) {
-        return getNonArraySubscription(myApplication.getGetDataService().getCountries(),targetClass,getNonArrayResponseCallback);
+        return getNonArraySubscription(myApplication.getGetDataService().getCountries(), targetClass, getNonArrayResponseCallback);
+    }
+
+    public Subscription validateMobile(Class targetClass, JsonObject requestJson, GetNonArrayResponseCallback getNonArrayResponseCallback) {
+        return getNonArraySubscription(myApplication.getGetDataService().checkMobileExist(requestJson), targetClass, getNonArrayResponseCallback);
     }
 
 
