@@ -1,28 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/faded_bg"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="@dimen/ten_dp"
-    tools:context=".activities.SignupOtpActivity">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.application.fmt.customViews.customFontViews.CustomTextviewBold
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/otp"
-        android:textColor="@color/green"
-        android:textSize="@dimen/twenty_sp" />
+    <data>
 
-    <include layout="@layout/horizontal_dark_grey_line" />
+        <variable
+            name="viewModel"
+            type="com.application.fmt.viewModels.signupViewModels.SignupOtpViewModel" />
+    </data>
 
-    <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ten_dp"
-        android:text="@string/enter_verification_code"
-        android:textColor="@color/green"
-        android:textSize="@dimen/sixteen_sp" />
-</LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/faded_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/ten_dp"
+        tools:context=".activities.SignupOtpActivity">
+
+        <com.application.fmt.customViews.customFontViews.CustomTextviewBold
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/otp"
+            android:textColor="@color/green"
+            android:textSize="@dimen/twenty_sp" />
+
+        <include layout="@layout/horizontal_dark_grey_line" />
+
+        <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:text="@string/enter_verification_code"
+            android:textColor="@color/green"
+            android:textSize="@dimen/eighteen_sp" />
+
+        <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:text="@{viewModel.formattedPasswordWithCode}"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/eighteen_sp" />
+
+        <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:text="@string/enter_4_digit_verification_code"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/sixteen_sp" />
+
+        <com.application.fmt.customViews.customFontViews.CustomOtpEdittext
+            android:layout_width="@dimen/two_hundred_dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:digits="0123456789"
+            android:inputType="number"
+            android:maxLength="4"
+            android:padding="8dp"
+            android:textSize="@dimen/thirty_sp"
+            app:oev_primary_color="@color/white"
+            app:oev_secondary_color="@color/light_gray" />
+
+        <com.application.fmt.customViews.customFontViews.CustomButtonRegular
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:background="@drawable/dark_bg_rounded_corner"
+            android:minEms="7"
+            android:text="@string/submit"
+            android:textColor="@color/white" />
+
+        <com.application.fmt.customViews.customFontViews.CustomButtonRegular
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:background="@drawable/green_bg_rounded_corner"
+            android:minEms="7"
+            android:text="@string/resend"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</layout>

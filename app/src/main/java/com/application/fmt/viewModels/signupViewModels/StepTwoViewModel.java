@@ -7,11 +7,13 @@ import android.widget.AdapterView;
 import androidx.annotation.NonNull;
 
 import com.application.fmt.ApiUtils.ApiHandler;
-import com.application.fmt.Constants.JsonKeys;
+import com.application.fmt.Constants.ApiKeys;
 import com.application.fmt.Models.CheckOnlyModel;
 import com.application.fmt.Models.CountriesModel;
 import com.application.fmt.Models.SignupRequestModel;
+import com.application.fmt.activities.SignupOtpActivity;
 import com.application.fmt.globalClasses.BaseAndroidViewModel;
+import com.application.fmt.globalClasses.MyApp;
 import com.application.fmt.utils.CommonFunctions;
 import com.application.fmt.utils.NetworkError;
 import com.application.fmt.utils.RxBus;
@@ -60,7 +62,8 @@ public class StepTwoViewModel extends BaseAndroidViewModel implements ApiHandler
         ApiHandler.getInstance(getApplication()).getCountries(CountriesModel.class, new ApiHandler.GetNonArrayResponseCallback() {
             @Override
             public <T> void onSuccess(T data) {
-                RxBus.getInstance().publish(data);
+                countriesModel = (CountriesModel) data;
+                RxBus.getInstance().publish(countriesModel);
             }
 
             @Override
@@ -72,7 +75,9 @@ public class StepTwoViewModel extends BaseAndroidViewModel implements ApiHandler
 
 
     public void onSelectItem(AdapterView<?> parent, View view, int pos, long id) {
-        if (view != null)
+
+
+        if (view != null && countriesModel != null)
             this.signupRequestModel.setCountryCode(countriesModel.getCountries().get(pos).getCountryCode());
 
     }
@@ -80,8 +85,8 @@ public class StepTwoViewModel extends BaseAndroidViewModel implements ApiHandler
     private JsonObject creteRequestJson() {
         JsonObject outerObject = new JsonObject();
         JsonObject innerObject = new JsonObject();
-        innerObject.addProperty(JsonKeys.MOBILE, signupRequestModel.getMobile());
-        outerObject.add(JsonKeys.USER, innerObject);
+        innerObject.addProperty(ApiKeys.MOBILE, signupRequestModel.getMobile());
+        outerObject.add(ApiKeys.USER, innerObject);
 
         return outerObject;
     }
@@ -101,8 +106,8 @@ public class StepTwoViewModel extends BaseAndroidViewModel implements ApiHandler
         if (data instanceof CheckOnlyModel) {
             CheckOnlyModel checkOnlyModel = (CheckOnlyModel) data;
             if (checkOnlyModel.getSuccess()) {
-                CommonFunctions.getInstance().showSuccessMessage(getApplication(), checkOnlyModel.getMessage());
-                RxBus.getInstance().publish(signupRequestModel);
+                sendOtp();
+                //CommonFunctions.getInstance().showSuccessMessage(getApplication(), checkOnlyModel.getMessage());
             } else {
                 CommonFunctions.getInstance().showErrorMessage(getApplication(), checkOnlyModel.getMessage());
             }
@@ -112,5 +117,37 @@ public class StepTwoViewModel extends BaseAndroidViewModel implements ApiHandler
     @Override
     public void onError(NetworkError networkError) {
         CommonFunctions.getInstance().showErrorMessage(getApplication(), networkError.getMessage());
+    }
+
+    private void sendOtp() {
+        ApiHandler.getInstance(getApplication()).sendOtp(CheckOnlyModel.class, getRequestJsonForRequestOtp(), new ApiHandler.GetNonArrayResponseCallback() {
+            @Override
+            public <T> void onSuccess(T data) {
+                if (data instanceof CheckOnlyModel) {
+                    CheckOnlyModel checkOnlyModel = (CheckOnlyModel) data;
+                        CommonFunctions.getInstance().showSuccessMessage(getApplication(), checkOnlyModel.getMessage());
+                    if (checkOnlyModel.getSuccess()) {
+                        RxBus.getInstance().publish(signupRequestModel);
+                        CommonFunctions.getInstance().moveToNextActivity(((MyApp) getApplication()).getCurrentActivity(), SignupOtpActivity.class);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+
+            }
+        });
+    }
+
+    private JsonObject getRequestJsonForRequestOtp() {
+        JsonObject outerJsonObject = new JsonObject();
+        JsonObject innerJsonObject = new JsonObject();
+        innerJsonObject.addProperty(ApiKeys.MOBILE, this.signupRequestModel.getMobile());
+        innerJsonObject.addProperty(ApiKeys.COUNTRY_CODE, this.signupRequestModel.getCountryCode());
+
+        outerJsonObject.add(ApiKeys.USER, innerJsonObject);
+
+        return outerJsonObject;
     }
 }

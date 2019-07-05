@@ -43,4 +43,6 @@
     <string name="about_us">About Us</string>
     <string name="otp">OTP</string>
     <string name="enter_verification_code">Enter Verification Code</string>
+    <string name="enter_4_digit_verification_code">Enter 4 digit verification code</string>
+    <string name="resend">Resend</string>
 </resources>

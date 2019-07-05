@@ -160,14 +160,16 @@ public class SignupRequestModel extends BaseObservable {
             errorMsg = ErrorMessages.ERROR_EMAIL_EMPTY;
         } else if (!validateTor.isEmail(email)) {
             errorMsg = ErrorMessages.ERROR_INVALID_EMAIL;
-        } else if (!validateTor.isEmpty(mobile)) {
+        } else if (validateTor.isEmpty(mobile)) {
             errorMsg = ErrorMessages.ERROR_NUMBER_BLANK;
-        } else if (!validateTor.isPhoneNumber(mobile)) {
+        } else if (!validateTor.isAtleastLength(mobile,4)) {
+            errorMsg = ErrorMessages.ERROR_INVALID_NUMBER;
+        } else if (!validateTor.isAtMostLength(mobile,10)) {
             errorMsg = ErrorMessages.ERROR_INVALID_NUMBER;
         }
         if (errorMsg.length() > 0) {
             Toast.makeText(app.getApplicationContext(), errorMsg, Toast.LENGTH_SHORT).show();
         }
-        return errorMsg.length() > 0;
+        return errorMsg.length() == 0;
     }
 }

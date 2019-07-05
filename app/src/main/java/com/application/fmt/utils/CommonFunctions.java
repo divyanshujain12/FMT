@@ -1,11 +1,13 @@
 package com.application.fmt.utils;
 
-import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class CommonFunctions {
     private static final CommonFunctions ourInstance = new CommonFunctions();
@@ -35,5 +37,10 @@ public class CommonFunctions {
         text.setTextColor(context.getColor(android.R.color.white));
 
         toast.show();
+    }
+
+    public void moveToNextActivity(Context context, Class nextActivity) {
+        Intent intent = new Intent(context, nextActivity);
+        context.startActivity(intent);
     }
 }

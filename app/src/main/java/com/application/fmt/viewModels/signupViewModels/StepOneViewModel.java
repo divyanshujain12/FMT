@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import androidx.annotation.NonNull;
 
 import com.application.fmt.ApiUtils.ApiHandler;
-import com.application.fmt.Constants.JsonKeys;
+import com.application.fmt.Constants.ApiKeys;
 import com.application.fmt.Models.CheckOnlyModel;
 import com.application.fmt.Models.SignupRequestModel;
 import com.application.fmt.activities.SignupActivity;
@@ -66,8 +66,8 @@ public class StepOneViewModel extends BaseAndroidViewModel implements ApiHandler
     private JsonObject creteRequestJson() {
         JsonObject outerObject = new JsonObject();
         JsonObject innerObject = new JsonObject();
-        innerObject.addProperty(JsonKeys.EMAIL, signupRequestModel.getEmail());
-        outerObject.add(JsonKeys.USER, innerObject);
+        innerObject.addProperty(ApiKeys.EMAIL, signupRequestModel.getEmail());
+        outerObject.add(ApiKeys.USER, innerObject);
 
         return outerObject;
     }

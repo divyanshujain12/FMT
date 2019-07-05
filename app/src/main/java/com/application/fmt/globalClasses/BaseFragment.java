@@ -15,6 +15,7 @@ public class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        this.baseAndroidViewModel.onActivityDestroy();
+        if (this.baseAndroidViewModel != null)
+            this.baseAndroidViewModel.onActivityDestroy();
     }
 }

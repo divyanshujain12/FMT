@@ -42,6 +42,9 @@ public class ApiHandler {
         return getNonArraySubscription(myApplication.getGetDataService().checkMobileExist(requestJson), targetClass, getNonArrayResponseCallback);
     }
 
+    public Subscription sendOtp(Class targetClass, JsonObject requestJson, GetNonArrayResponseCallback getNonArrayResponseCallback) {
+        return getNonArraySubscription(myApplication.getGetDataService().sendOtp(requestJson), targetClass, getNonArrayResponseCallback);
+    }
 
     private Subscription getNonArraySubscription(Observable<JsonElement> observable, final Class targetClass, final GetNonArrayResponseCallback getNonArrayResponseCallback) {
         return observable.subscribeOn(Schedulers.io())
