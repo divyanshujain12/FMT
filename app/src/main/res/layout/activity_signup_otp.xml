@@ -62,6 +62,7 @@
             android:inputType="number"
             android:maxLength="4"
             android:padding="8dp"
+            android:text="@={viewModel.signupRequestModel.otp}"
             android:textSize="@dimen/thirty_sp"
             app:oev_primary_color="@color/white"
             app:oev_secondary_color="@color/light_gray" />
@@ -72,6 +73,7 @@
             android:layout_marginTop="@dimen/twenty_dp"
             android:background="@drawable/dark_bg_rounded_corner"
             android:minEms="7"
+            android:onClick="@{() -> viewModel.onSubmitClick()}"
             android:text="@string/submit"
             android:textColor="@color/white" />
 
@@ -81,6 +83,7 @@
             android:layout_marginTop="@dimen/ten_dp"
             android:background="@drawable/green_bg_rounded_corner"
             android:minEms="7"
+            android:onClick="@{() -> viewModel.onResendOtpClick()}"
             android:text="@string/resend"
             android:textColor="@color/white" />
     </LinearLayout>

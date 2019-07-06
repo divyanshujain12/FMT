@@ -16,6 +16,8 @@ import com.application.fmt.customViews.customFontViews.CustomTextviewRegular;
 import com.application.fmt.globalClasses.BaseAndroidViewModel;
 import com.application.fmt.utils.NetworkError;
 import com.application.fmt.utils.RxBus;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import rx.Subscription;
@@ -64,6 +66,8 @@ public class StepOneViewModel extends BaseAndroidViewModel implements ApiHandler
     }
 
     private JsonObject creteRequestJson() {
+        Gson gson = new Gson();
+        JsonElement jsonElement = gson.toJsonTree(signupRequestModel);
         JsonObject outerObject = new JsonObject();
         JsonObject innerObject = new JsonObject();
         innerObject.addProperty(ApiKeys.EMAIL, signupRequestModel.getEmail());

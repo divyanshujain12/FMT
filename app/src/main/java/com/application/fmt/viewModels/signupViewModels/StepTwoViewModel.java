@@ -73,12 +73,11 @@ public class StepTwoViewModel extends BaseAndroidViewModel implements ApiHandler
         });
     }
 
-
     public void onSelectItem(AdapterView<?> parent, View view, int pos, long id) {
 
 
         if (view != null && countriesModel != null)
-            this.signupRequestModel.setCountryCode(countriesModel.getCountries().get(pos).getCountryCode());
+            this.signupRequestModel.setCountryCode("+"+countriesModel.getCountries().get(pos).getCountryCode());
 
     }
 
@@ -107,7 +106,6 @@ public class StepTwoViewModel extends BaseAndroidViewModel implements ApiHandler
             CheckOnlyModel checkOnlyModel = (CheckOnlyModel) data;
             if (checkOnlyModel.getSuccess()) {
                 sendOtp();
-                //CommonFunctions.getInstance().showSuccessMessage(getApplication(), checkOnlyModel.getMessage());
             } else {
                 CommonFunctions.getInstance().showErrorMessage(getApplication(), checkOnlyModel.getMessage());
             }

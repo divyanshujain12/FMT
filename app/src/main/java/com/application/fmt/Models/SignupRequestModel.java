@@ -172,4 +172,16 @@ public class SignupRequestModel extends BaseObservable {
         }
         return errorMsg.length() == 0;
     }
+
+    public boolean validateSignupOtp(Application app) {
+        ValidateTor validateTor = new ValidateTor();
+        String errorMsg = "";
+        if (!validateTor.hasAtleastOneDigit(otp)) {
+            errorMsg = ErrorMessages.ERROR_OTP_EMPTY;
+        }
+        if (errorMsg.length() > 0) {
+            Toast.makeText(app.getApplicationContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        }
+        return errorMsg.length() == 0;
+    }
 }
