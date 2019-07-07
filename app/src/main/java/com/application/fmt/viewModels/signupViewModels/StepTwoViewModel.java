@@ -11,6 +11,7 @@ import com.application.fmt.Constants.ApiKeys;
 import com.application.fmt.Models.CheckOnlyModel;
 import com.application.fmt.Models.CountriesModel;
 import com.application.fmt.Models.SignupRequestModel;
+import com.application.fmt.activities.LoginActivity;
 import com.application.fmt.activities.SignupOtpActivity;
 import com.application.fmt.globalClasses.BaseAndroidViewModel;
 import com.application.fmt.globalClasses.MyApp;
@@ -18,6 +19,10 @@ import com.application.fmt.utils.CommonFunctions;
 import com.application.fmt.utils.NetworkError;
 import com.application.fmt.utils.RxBus;
 import com.google.gson.JsonObject;
+import com.somesh.permissionmadeeasy.helper.PermissionHelper;
+import com.somesh.permissionmadeeasy.intefaces.PermissionListener;
+
+import java.util.ArrayList;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -28,7 +33,10 @@ public class StepTwoViewModel extends BaseAndroidViewModel implements ApiHandler
     private Disposable disposable;
     private SignupRequestModel signupRequestModel;
     private CountriesModel countriesModel;
-
+    private PermissionHelper permissionHelper;
+    private boolean parternedCharitiesChecked = true;
+    private boolean locationChecked = true;
+    private boolean termAndConditionsChecked = true;
     public StepTwoViewModel(@NonNull Application application) {
         super(application);
         getRequestModel();
@@ -53,9 +61,13 @@ public class StepTwoViewModel extends BaseAndroidViewModel implements ApiHandler
     }
 
     public void onSignupClick() {
-        if (signupRequestModel.validationForSignUpStepTwo(getApplication())) {
-            ApiHandler.getInstance(getApplication()).validateMobile(CheckOnlyModel.class, creteRequestJson(), this);
+        if (parternedCharitiesChecked && locationChecked && termAndConditionsChecked) {
+            permissionHelper.requestPermissions();
+        } else {
+            CommonFunctions.getInstance().showErrorMessage(getApplication(), "You need to check all checkbox");
         }
+
+
     }
 
     private void getCountriesFromServer() {
@@ -100,6 +112,9 @@ public class StepTwoViewModel extends BaseAndroidViewModel implements ApiHandler
             disposable.dispose();
     }
 
+    public void goToSignInActivity() {
+        CommonFunctions.getInstance().moveToNextActivity(((MyApp) getApplication()).getCurrentActivity(), LoginActivity.class);
+    }
     @Override
     public <T> void onSuccess(T data) {
         if (data instanceof CheckOnlyModel) {
@@ -147,5 +162,53 @@ public class StepTwoViewModel extends BaseAndroidViewModel implements ApiHandler
         outerJsonObject.add(ApiKeys.USER, innerJsonObject);
 
         return outerJsonObject;
+    }
+
+    private PermissionListener permissionListener = new PermissionListener() {
+        @Override
+        public void onPermissionsGranted(int requestCode, ArrayList<String> acceptedPermissionList) {
+            ApiHandler.getCustomDialog().cancel();
+            if (signupRequestModel.validationForSignUpStepTwo(getApplication())) {
+                ApiHandler.getInstance(getApplication()).validateMobile(CheckOnlyModel.class, creteRequestJson(), StepTwoViewModel.this);
+            }
+        }
+
+        @Override
+        public void onPermissionsDenied(int requestCode, ArrayList<String> deniedPermissionList) {
+            ApiHandler.getCustomDialog().cancel();
+            CommonFunctions.getInstance().showErrorMessage(getApplication(), "You need to allow to access location for sign up with FMT");
+        }
+    };
+
+    public PermissionListener getPermissionListener() {
+        return permissionListener;
+    }
+
+    public void setPermissionHelper(PermissionHelper permissionHelper) {
+        this.permissionHelper = permissionHelper;
+    }
+
+    public boolean isParternedCharitiesChecked() {
+        return parternedCharitiesChecked;
+    }
+
+    public boolean isLocationChecked() {
+        return locationChecked;
+    }
+
+    public boolean isTermAndConditionsChecked() {
+        return termAndConditionsChecked;
+    }
+
+    public void setParternedCharitiesChecked(boolean parternedCharitiesChecked) {
+        this.parternedCharitiesChecked = parternedCharitiesChecked;
+    }
+
+    public void setLocationChecked(boolean locationChecked) {
+        this.locationChecked = locationChecked;
+    }
+
+    public void setTermAndConditionsChecked(boolean termAndConditionsChecked) {
+        this.termAndConditionsChecked = termAndConditionsChecked;
     }
 }

@@ -1,11 +1,11 @@
 package com.application.fmt.fragments.signupFragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
@@ -19,6 +19,8 @@ import com.application.fmt.globalClasses.BaseFragment;
 import com.application.fmt.utils.CommonUiUtils;
 import com.application.fmt.utils.RxBus;
 import com.application.fmt.viewModels.signupViewModels.StepTwoViewModel;
+import com.somesh.permissionmadeeasy.enums.Permission;
+import com.somesh.permissionmadeeasy.helper.PermissionHelper;
 
 import java.util.ArrayList;
 
@@ -31,6 +33,7 @@ public class StepTwo extends BaseFragment {
     private StepTwoViewModel stepTwoViewModel;
     private ArrayList<Country> countries;
     private SpinnerAdapter spinnerAdapter;
+    private PermissionHelper permissionHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,22 +66,29 @@ public class StepTwo extends BaseFragment {
 
     private void initViews() {
         fragmentStepTwoBinding.countrySP.setAdapter(CommonUiUtils.getInstance().setCustomSpinnerAdapter(getContext(), R.array.countries_array));
+        createRequestPermissionHelper();
         createAdapter(countries);
 
 
     }
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    private void createRequestPermissionHelper() {
+        permissionHelper = PermissionHelper.Builder()
+                .with(this)
+                .requestCode(101)
+                .setPermissionResultCallback(stepTwoViewModel.getPermissionListener())
+                .askFor(Permission.LOCATION)
+                .rationalMessage("Permissions are required for app to work properly") //Optional
+                .build();
 
+        stepTwoViewModel.setPermissionHelper(permissionHelper);
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        permissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void getCountriesList() {

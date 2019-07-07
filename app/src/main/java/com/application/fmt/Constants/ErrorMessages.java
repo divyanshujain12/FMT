@@ -7,4 +7,5 @@ public interface ErrorMessages {
     String ERROR_NUMBER_BLANK = "Number can not left blank";
     String ERROR_INVALID_NUMBER = "Invalid phone number";
     String ERROR_OTP_EMPTY = "Otp can not left blank";
+    String ERROR_INVALID_OTP = "Otp can not be less than 4 digit";
 }

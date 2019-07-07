@@ -135,6 +135,8 @@
                 android:paddingTop="@dimen/five_dp"
                 android:paddingBottom="@dimen/five_dp"
                 android:text="@string/sign_in"
+                android:clickable="true"
+                android:onClick="@{() -> viewModel.goToSignInActivity()}"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/fourteen_sp" />
         </LinearLayout>

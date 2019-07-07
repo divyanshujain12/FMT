@@ -7,9 +7,14 @@ import androidx.databinding.ObservableField;
 
 import com.application.fmt.ApiUtils.ApiHandler;
 import com.application.fmt.Constants.ApiKeys;
+import com.application.fmt.Models.CheckOnlyModel;
 import com.application.fmt.Models.SignupRequestModel;
 import com.application.fmt.Models.SignupResponseModel;
+import com.application.fmt.activities.LoginActivity;
+import com.application.fmt.activities.SignupOtpActivity;
 import com.application.fmt.globalClasses.BaseAndroidViewModel;
+import com.application.fmt.globalClasses.MyApp;
+import com.application.fmt.utils.CommonFunctions;
 import com.application.fmt.utils.NetworkError;
 import com.application.fmt.utils.RxBus;
 import com.google.gson.Gson;
@@ -62,7 +67,7 @@ public class SignupOtpViewModel extends BaseAndroidViewModel implements ApiHandl
     }
 
     public void onResendOtpClick() {
-
+        sendOtp();
     }
 
     private String getFormattedPhoneNumberWithCode() {
@@ -78,6 +83,23 @@ public class SignupOtpViewModel extends BaseAndroidViewModel implements ApiHandl
     }
 
 
+    private void sendOtp() {
+        ApiHandler.getInstance(getApplication()).sendOtp(CheckOnlyModel.class, getRequestJsonForRequestOtp(), new ApiHandler.GetNonArrayResponseCallback() {
+            @Override
+            public <T> void onSuccess(T data) {
+                if (data instanceof CheckOnlyModel) {
+                    CheckOnlyModel checkOnlyModel = (CheckOnlyModel) data;
+                    CommonFunctions.getInstance().showSuccessMessage(getApplication(), checkOnlyModel.getMessage());
+                }
+            }
+
+            @Override
+            public void onError(NetworkError networkError) {
+
+            }
+        });
+    }
+
     private JsonObject createRequestJsonForSignup() {
         Gson gson = new Gson();
         JsonElement jsonElement = gson.toJsonTree(signupRequestModel);
@@ -85,6 +107,35 @@ public class SignupOtpViewModel extends BaseAndroidViewModel implements ApiHandl
         jsonObject.add(ApiKeys.USER, jsonElement);
         return jsonObject;
     }
+
+    private JsonObject getRequestJsonForRequestOtp() {
+        JsonObject outerJsonObject = new JsonObject();
+        JsonObject innerJsonObject = new JsonObject();
+        innerJsonObject.addProperty(ApiKeys.MOBILE, this.signupRequestModel.getMobile());
+        innerJsonObject.addProperty(ApiKeys.COUNTRY_CODE, this.signupRequestModel.getCountryCode());
+
+        outerJsonObject.add(ApiKeys.USER, innerJsonObject);
+
+        return outerJsonObject;
+    }
+
+
+    @Override
+    public <T> void onSuccess(T data) {
+        if (data instanceof SignupResponseModel) {
+            SignupResponseModel signupResponseModel = (SignupResponseModel) data;
+            CommonFunctions.getInstance().showSuccessMessage(getApplication(), signupResponseModel.getMessage());
+            if (signupResponseModel.getSuccess()) {
+                CommonFunctions.getInstance().moveToNextActivity(((MyApp) getApplication()).getCurrentActivity(), LoginActivity.class);
+            }
+        }
+    }
+
+    @Override
+    public void onError(NetworkError networkError) {
+        CommonFunctions.getInstance().showSuccessMessage(getApplication(), networkError.getMessage());
+    }
+
 
     @Override
     public void onActivityDestroy() {
@@ -96,15 +147,7 @@ public class SignupOtpViewModel extends BaseAndroidViewModel implements ApiHandl
             disposable.dispose();
     }
 
-    @Override
-    public <T> void onSuccess(T data) {
 
-    }
-
-    @Override
-    public void onError(NetworkError networkError) {
-
-    }
 }
 
 

@@ -23,7 +23,8 @@ public class ApiHandler {
 
     public static ApiHandler getInstance(Application myApp) {
         myApplication = (MyApp) myApp;
-        customDialog = new CustomDialog(myApplication.getCurrentActivity());
+        if (customDialog == null)
+            customDialog = new CustomDialog(myApplication.getCurrentActivity());
         if (gson == null)
             gson = new Gson();
         return ourInstance;
@@ -33,26 +34,39 @@ public class ApiHandler {
     }
 
     public Subscription validateEmailAddress(JsonObject requestJson, Class targetClass, GetNonArrayResponseCallback getNonArrayResponseCallback) {
-
         return getNonArraySubscription(myApplication.getGetDataService().checkEmailExist(requestJson), targetClass, getNonArrayResponseCallback);
-
     }
 
     public Subscription getCountries(Class targetClass, GetNonArrayResponseCallback getNonArrayResponseCallback) {
+
         return getNonArraySubscription(myApplication.getGetDataService().getCountries(), targetClass, getNonArrayResponseCallback);
     }
 
     public Subscription validateMobile(Class targetClass, JsonObject requestJson, GetNonArrayResponseCallback getNonArrayResponseCallback) {
+
         return getNonArraySubscription(myApplication.getGetDataService().checkMobileExist(requestJson), targetClass, getNonArrayResponseCallback);
     }
 
     public Subscription sendOtp(Class targetClass, JsonObject requestJson, GetNonArrayResponseCallback getNonArrayResponseCallback) {
+
         return getNonArraySubscription(myApplication.getGetDataService().sendOtp(requestJson), targetClass, getNonArrayResponseCallback);
     }
 
     public Subscription register(Class targetClass, JsonObject requestJson, GetNonArrayResponseCallback getNonArrayResponseCallback) {
+
         return getNonArraySubscription(myApplication.getGetDataService().register(requestJson), targetClass, getNonArrayResponseCallback);
     }
+
+    public Subscription sendLoginOtp(Class targetClass, JsonObject requestJson, GetNonArrayResponseCallback getNonArrayResponseCallback) {
+
+        return getNonArraySubscription(myApplication.getGetDataService().loginOtp(requestJson), targetClass, getNonArrayResponseCallback);
+    }
+
+    public Subscription login(Class targetClass, JsonObject requestJson, GetNonArrayResponseCallback getNonArrayResponseCallback) {
+
+        return getNonArraySubscription(myApplication.getGetDataService().login(requestJson), targetClass, getNonArrayResponseCallback);
+    }
+
 
     private Subscription getNonArraySubscription(Observable<JsonElement> observable, final Class targetClass, final GetNonArrayResponseCallback getNonArrayResponseCallback) {
         customDialog.show();
@@ -65,13 +79,13 @@ public class ApiHandler {
 
                     @Override
                     public void onError(Throwable e) {
-                        customDialog.hide();
+                        customDialog.cancel();
                         getNonArrayResponseCallback.onError(new NetworkError(e));
                     }
 
                     @Override
                     public void onNext(JsonElement baseObservable) {
-                        customDialog.hide();
+                        customDialog.cancel();
                         getNonArrayResponseCallback.onSuccess(gson.fromJson(baseObservable, targetClass));
                     }
                 });
@@ -84,5 +98,7 @@ public class ApiHandler {
         void onError(NetworkError networkError);
     }
 
-
+    public static CustomDialog getCustomDialog() {
+        return customDialog;
+    }
 }

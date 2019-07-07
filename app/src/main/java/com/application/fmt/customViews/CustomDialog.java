@@ -26,7 +26,7 @@ public class CustomDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         heartProgressView = (HeartProgressView) view.findViewById(R.id.heartLoadingView);
 
-
+        setCancelable(true);
         getWindow().setBackgroundDrawableResource(
                 android.R.color.transparent);
         WindowManager.LayoutParams wlmp = getWindow().getAttributes();

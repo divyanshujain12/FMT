@@ -1,9 +1,16 @@
 package com.application.fmt.Models;
 
+import android.app.Application;
+
+import androidx.databinding.BaseObservable;
+
+import com.application.fmt.Constants.ErrorMessages;
+import com.application.fmt.utils.CommonFunctions;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.raywenderlich.android.validatetor.ValidateTor;
 
-public class User {
+public class User extends BaseObservable {
 
     @SerializedName("id")
     @Expose
@@ -26,6 +33,11 @@ public class User {
     @SerializedName("authentication_token")
     @Expose
     private String authenticationToken;
+    @SerializedName("otp")
+    @Expose
+    private String otp;
+
+
 
     public Integer getId() {
         return id;
@@ -83,4 +95,42 @@ public class User {
         this.authenticationToken = authenticationToken;
     }
 
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
+
+    public boolean loginOtpValidation(Application app) {
+        ValidateTor validateTor = new ValidateTor();
+        String errorMsg = "";
+        if (validateTor.isEmpty(getEmail())) {
+            errorMsg = ErrorMessages.ERROR_EMAIL_EMPTY;
+        } else if (!validateTor.isEmail(getEmail())) {
+            errorMsg = ErrorMessages.ERROR_INVALID_EMAIL;
+        }
+        if (errorMsg.length() > 0) {
+            CommonFunctions.getInstance().showErrorMessage(app, errorMsg);
+        }
+
+        return errorMsg.length() == 0;
+    }
+
+    public boolean loginValidation(Application app) {
+        ValidateTor validateTor = new ValidateTor();
+        String errorMsg = "";
+
+        if (validateTor.isEmpty(getOtp())) {
+            errorMsg = ErrorMessages.ERROR_OTP_EMPTY;
+        } else if (!validateTor.isAtleastLength(getOtp(), 4)) {
+            errorMsg = ErrorMessages.ERROR_INVALID_OTP;
+        }
+        if (errorMsg.length() > 0) {
+            CommonFunctions.getInstance().showErrorMessage(app, errorMsg);
+        }
+
+        return errorMsg.length() == 0;
+    }
 }

@@ -11,13 +11,14 @@ import com.application.fmt.ApiUtils.ApiHandler;
 import com.application.fmt.Constants.ApiKeys;
 import com.application.fmt.Models.CheckOnlyModel;
 import com.application.fmt.Models.SignupRequestModel;
+import com.application.fmt.activities.LoginActivity;
 import com.application.fmt.activities.SignupActivity;
 import com.application.fmt.customViews.customFontViews.CustomTextviewRegular;
 import com.application.fmt.globalClasses.BaseAndroidViewModel;
+import com.application.fmt.globalClasses.MyApp;
+import com.application.fmt.utils.CommonFunctions;
 import com.application.fmt.utils.NetworkError;
 import com.application.fmt.utils.RxBus;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import rx.Subscription;
@@ -66,14 +67,16 @@ public class StepOneViewModel extends BaseAndroidViewModel implements ApiHandler
     }
 
     private JsonObject creteRequestJson() {
-        Gson gson = new Gson();
-        JsonElement jsonElement = gson.toJsonTree(signupRequestModel);
         JsonObject outerObject = new JsonObject();
         JsonObject innerObject = new JsonObject();
         innerObject.addProperty(ApiKeys.EMAIL, signupRequestModel.getEmail());
         outerObject.add(ApiKeys.USER, innerObject);
 
         return outerObject;
+    }
+
+    public void goToSignInActivity() {
+        CommonFunctions.getInstance().moveToNextActivity(((MyApp) getApplication()).getCurrentActivity(), LoginActivity.class);
     }
 
     @Override
@@ -85,9 +88,12 @@ public class StepOneViewModel extends BaseAndroidViewModel implements ApiHandler
 
     @Override
     public <T> void onSuccess(T data) {
-        if (((CheckOnlyModel) data).getSuccess()) {
+        CheckOnlyModel checkOnlyModel = (CheckOnlyModel) data;
+        if (checkOnlyModel.getSuccess()) {
             RxBus.getInstance().publish(signupRequestModel);
             signupActivity.getWizard().navigateNext();
+        } else {
+            CommonFunctions.getInstance().showErrorMessage(getApplication(), checkOnlyModel.getMessage());
         }
     }
 

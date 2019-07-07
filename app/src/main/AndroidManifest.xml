@@ -4,6 +4,7 @@
     package="com.application.fmt">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".globalClasses.MyApp"
@@ -15,20 +16,22 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.SignupOtpActivity"></activity>
+        <activity android:name=".activities.SignupOtpActivity" />
         <activity android:name=".activities.LoginOtpActivity" />
         <activity
             android:name=".activities.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.SignupActivity">
+
+        </activity>
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LoginActivity"></activity>
         <activity android:name=".activities.MainActivity" />
     </application>
 
