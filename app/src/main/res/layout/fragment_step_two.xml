@@ -8,145 +8,150 @@
             type="com.application.fmt.viewModels.signupViewModels.StepTwoViewModel" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/dark_bg"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="@dimen/ten_dp"
-        tools:context=".fragments.signupFragments.StepTwo">
-
-        <include layout="@layout/signup_header" />
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/countrySP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/twenty_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:background="@drawable/white_border_bg"
-            android:entries="@array/countries_array"
-            android:onItemSelected="@{(parent,view,pos,id)->viewModel.onSelectItem(parent,view,pos,id)}" />
-
-        <com.application.fmt.customViews.customFontViews.CustomEditTextRegular
-            android:id="@+id/phoneNumberET"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/twenty_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:background="@drawable/white_border_bg"
-            android:hint="@string/mobile_number"
-            android:inputType="number"
-            android:padding="@dimen/ten_dp"
-            android:text="@={viewModel.signupRequestModel.mobile}"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white_hint" />
-
-        <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginTop="@dimen/twenty_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:text="@string/_10_of_your_subscription_fee_will_be_donated"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sixteen_sp" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/twenty_dp"
-            android:layout_marginEnd="@dimen/twenty_dp"
-            android:orientation="vertical">
-
-
-            <com.application.fmt.customViews.customFontViews.CustomCheckboxRegular
-                android:id="@+id/partneredCharitiesCB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/green"
-                android:checked="@={viewModel.parternedCharitiesChecked}"
-                android:padding="@dimen/five_dp"
-                android:text="@string/partnered_charities"
-                android:textColor="@color/white"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.application.fmt.customViews.customFontViews.CustomCheckboxRegular
-                android:id="@+id/locationCB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/green"
-                android:checked="@={viewModel.locationChecked}"
-                android:padding="@dimen/five_dp"
-                android:text="@string/please_allow_your_current_location"
-                android:textColor="@color/white"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/partneredCharitiesCB" />
-
-            <com.application.fmt.customViews.customFontViews.CustomCheckboxRegular
-                android:id="@+id/termsCB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/green"
-                android:checked="@={viewModel.termAndConditionsChecked}"
-                android:padding="@dimen/five_dp"
-                android:text="@string/i_agree_term_and_conditions"
-                android:textColor="@color/white"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/locationCB" />
-
-            <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/two_dp"
-                android:text="@string/read_more"
-                android:textColor="@color/colorPrimary"
-                app:layout_constraintBottom_toBottomOf="@id/termsCB"
-                app:layout_constraintLeft_toRightOf="@id/termsCB"
-                app:layout_constraintTop_toTopOf="@id/termsCB" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <com.application.fmt.customViews.customFontViews.CustomButtonRegular
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/twenty_dp"
-            android:minEms="10"
-            android:onClick="@{() -> viewModel.onSignupClick()}"
-            android:text="@string/sign_up" />
-
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ten_dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:background="@drawable/dark_bg"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/ten_dp"
+            tools:context=".fragments.signupFragments.StepTwo">
 
-            <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
-                android:layout_width="wrap_content"
+            <include layout="@layout/signup_header" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/countrySP"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/five_dp"
-                android:paddingBottom="@dimen/five_dp"
-                android:text="@string/already_a_member"
+                android:layout_marginStart="@dimen/twenty_dp"
+                android:layout_marginTop="@dimen/twenty_dp"
+                android:layout_marginEnd="@dimen/twenty_dp"
+                android:background="@drawable/white_border_bg"
+                android:entries="@array/countries_array"
+                android:onItemSelected="@{(parent,view,pos,id)->viewModel.onSelectItem(parent,view,pos,id)}" />
+
+            <com.application.fmt.customViews.customFontViews.CustomEditTextRegular
+                android:id="@+id/phoneNumberET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty_dp"
+                android:layout_marginTop="@dimen/twenty_dp"
+                android:layout_marginEnd="@dimen/twenty_dp"
+                android:background="@drawable/white_border_bg"
+                android:hint="@string/mobile_number"
+                android:inputType="number"
+                android:padding="@dimen/ten_dp"
+                android:text="@={viewModel.signupRequestModel.mobile}"
                 android:textColor="@color/white"
-                android:textSize="@dimen/fourteen_sp" />
+                android:textColorHint="@color/white_hint" />
 
             <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty_dp"
+                android:layout_marginTop="@dimen/twenty_dp"
+                android:layout_marginEnd="@dimen/twenty_dp"
+                android:text="@string/_10_of_your_subscription_fee_will_be_donated"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sixteen_sp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/twenty_dp"
+                android:layout_marginEnd="@dimen/twenty_dp"
+                android:orientation="vertical">
+
+
+                <com.application.fmt.customViews.customFontViews.CustomCheckboxRegular
+                    android:id="@+id/partneredCharitiesCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/green"
+                    android:checked="@={viewModel.parternedCharitiesChecked}"
+                    android:padding="@dimen/five_dp"
+                    android:text="@string/partnered_charities"
+                    android:textColor="@color/white"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.application.fmt.customViews.customFontViews.CustomCheckboxRegular
+                    android:id="@+id/locationCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/green"
+                    android:checked="@={viewModel.locationChecked}"
+                    android:padding="@dimen/five_dp"
+                    android:text="@string/please_allow_your_current_location"
+                    android:textColor="@color/white"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/partneredCharitiesCB" />
+
+                <com.application.fmt.customViews.customFontViews.CustomCheckboxRegular
+                    android:id="@+id/termsCB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/green"
+                    android:checked="@={viewModel.termAndConditionsChecked}"
+                    android:padding="@dimen/five_dp"
+                    android:text="@string/i_agree_term_and_conditions"
+                    android:textColor="@color/white"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/locationCB" />
+
+                <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/two_dp"
+                    android:text="@string/read_more"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="@id/termsCB"
+                    app:layout_constraintLeft_toRightOf="@id/termsCB"
+                    app:layout_constraintTop_toTopOf="@id/termsCB" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.application.fmt.customViews.customFontViews.CustomButtonRegular
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/two_dp"
-                android:paddingTop="@dimen/five_dp"
-                android:paddingBottom="@dimen/five_dp"
-                android:text="@string/sign_in"
-                android:onClick="@{() -> viewModel.goToSignInActivity()}"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/fourteen_sp" />
+                android:layout_marginTop="@dimen/twenty_dp"
+                android:minEms="10"
+                android:onClick="@{() -> viewModel.onSignupClick()}"
+                android:text="@string/sign_up" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/five_dp"
+                    android:paddingBottom="@dimen/five_dp"
+                    android:text="@string/already_a_member"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fourteen_sp" />
+
+                <com.application.fmt.customViews.customFontViews.CustomTextviewRegular
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/two_dp"
+                    android:onClick="@{() -> viewModel.goToSignInActivity()}"
+                    android:paddingTop="@dimen/five_dp"
+                    android:paddingBottom="@dimen/five_dp"
+                    android:text="@string/sign_in"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/fourteen_sp" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 </layout>
