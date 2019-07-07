@@ -17,6 +17,19 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.application.fmt.customViews.customFontViews.CustomTextviewBold
+        android:id="@+id/heading2TV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/ten_dp"
+        android:paddingBottom="@dimen/five_dp"
+        android:text="@string/ephesians_5_22_25"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/twenty_sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headingTV" />
+
     <ImageView
         android:id="@+id/headingLoveLineIV"
         android:layout_width="wrap_content"
@@ -26,7 +39,7 @@
         android:src="@drawable/ic_love_line"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headingTV" />
+        app:layout_constraintTop_toBottomOf="@id/heading2TV" />
 
 
     <ImageView
