@@ -1,8 +1,11 @@
 package com.application.fmt.ApiUtils;
 
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import java.io.IOException;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -14,10 +17,23 @@ public class RetrofitClientInstance {
     public static final String BASE_URL = "http://18.191.197.193/";
 
 
-
-
     public static Retrofit getRetrofitInstance(String baseUrl) {
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+        clientBuilder.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Interceptor.Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("device-type", "android")
+                        .header("Content-Type", " application/json")
+                        .method(original.method(), original.body())
+                        .build();
+
+                return chain.proceed(request);
+            }
+        });
+
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         clientBuilder.addInterceptor(loggingInterceptor);
