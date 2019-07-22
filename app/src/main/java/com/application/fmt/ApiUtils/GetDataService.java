@@ -37,5 +37,5 @@ public interface GetDataService {
 
     @Multipart
     @POST("users/face_recognition")
-    Observable<JsonElement> uploadFile(@Part MultipartBody.Part file, @Part("mobile") RequestBody mobile);
+    Observable<JsonElement> uploadFile(@Part("user") RequestBody user);
 }

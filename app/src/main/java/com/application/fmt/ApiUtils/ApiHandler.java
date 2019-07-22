@@ -69,8 +69,8 @@ public class ApiHandler {
         return getNonArraySubscription(myApplication.getGetDataService().login(requestJson), targetClass, getNonArrayResponseCallback);
     }
 
-    public Subscription uploadFile(Class targetClass, MultipartBody.Part part, RequestBody requestBody, GetNonArrayResponseCallback getNonArrayResponseCallback) {
-        return getNonArraySubscription(myApplication.getGetDataService().uploadFile(part, requestBody), targetClass, getNonArrayResponseCallback);
+    public Subscription uploadFile(Class targetClass, RequestBody requestBody, GetNonArrayResponseCallback getNonArrayResponseCallback) {
+        return getNonArraySubscription(myApplication.getGetDataService().uploadFile(requestBody), targetClass, getNonArrayResponseCallback);
     }
 
     private Subscription getNonArraySubscription(Observable<JsonElement> observable, final Class targetClass, final GetNonArrayResponseCallback getNonArrayResponseCallback) {
