@@ -9,6 +9,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscription;
@@ -67,6 +69,9 @@ public class ApiHandler {
         return getNonArraySubscription(myApplication.getGetDataService().login(requestJson), targetClass, getNonArrayResponseCallback);
     }
 
+    public Subscription uploadFile(Class targetClass, MultipartBody.Part part, RequestBody requestBody, GetNonArrayResponseCallback getNonArrayResponseCallback) {
+        return getNonArraySubscription(myApplication.getGetDataService().uploadFile(part, requestBody), targetClass, getNonArrayResponseCallback);
+    }
 
     private Subscription getNonArraySubscription(Observable<JsonElement> observable, final Class targetClass, final GetNonArrayResponseCallback getNonArrayResponseCallback) {
         customDialog.show();
