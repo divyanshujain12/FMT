@@ -1,6 +1,7 @@
 package com.application.fmt.ApiUtils;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -33,6 +34,10 @@ public class RetrofitClientInstance {
                 return chain.proceed(request);
             }
         });
+
+        clientBuilder.connectTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(40, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS);
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

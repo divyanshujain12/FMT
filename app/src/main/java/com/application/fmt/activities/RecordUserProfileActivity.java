@@ -18,6 +18,7 @@ import com.application.fmt.utils.NetworkError;
 import java.io.File;
 import java.io.IOException;
 
+import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -72,11 +73,17 @@ public class RecordUserProfileActivity extends BaseActivity {
     }
 
     private void uploadFileToServer() {
+        try {
+            newfile = new Compressor(this).compressToFile(newfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), newfile);
         final MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
         requestBodyBuilder.addFormDataPart("profile_image", newfile.getName(), requestBody);
         requestBodyBuilder.addFormDataPart("mobile", "17147233172");
+
 
         subscription = ApiHandler.getInstance(getApplication()).uploadFile(CheckOnlyModel.class, requestBodyBuilder.build(), new ApiHandler.GetNonArrayResponseCallback() {
             @Override
