@@ -79,13 +79,16 @@ public class RecordUserProfileActivity extends BaseActivity {
             e.printStackTrace();
         }
         RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), newfile);
-        final MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM);
-        requestBodyBuilder.addFormDataPart("profile_image", newfile.getName(), requestBody);
-        requestBodyBuilder.addFormDataPart("mobile", "17147233172");
 
 
-        subscription = ApiHandler.getInstance(getApplication()).uploadFile(CheckOnlyModel.class, requestBodyBuilder.build(), new ApiHandler.GetNonArrayResponseCallback() {
+        MultipartBody.Part part = MultipartBody.Part.createFormData("profile_image", newfile.getName(), requestBody);
+        //requestBodyBuilder.addFormDataPart("profile_image", newfile.getName(), requestBody);
+        RequestBody mobile = RequestBody.create(MediaType.parse("*/*"), "17147233172");
+
+        //requestBodyBuilder.addFormDataPart("mobile", "17147233172");
+
+
+        subscription = ApiHandler.getInstance(getApplication()).uploadFile(CheckOnlyModel.class, part, mobile, new ApiHandler.GetNonArrayResponseCallback() {
             @Override
             public <T> void onSuccess(T data) {
 
