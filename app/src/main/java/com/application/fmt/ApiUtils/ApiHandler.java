@@ -25,8 +25,8 @@ public class ApiHandler {
 
     public static ApiHandler getInstance(Application myApp) {
         myApplication = (MyApp) myApp;
-        if (customDialog == null)
-            customDialog = new CustomDialog(myApplication.getCurrentActivity());
+
+
         if (gson == null)
             gson = new Gson();
         return ourInstance;
@@ -74,6 +74,7 @@ public class ApiHandler {
     }
 
     private Subscription getNonArraySubscription(Observable<JsonElement> observable, final Class targetClass, final GetNonArrayResponseCallback getNonArrayResponseCallback) {
+        customDialog = new CustomDialog(myApplication.getCurrentActivity());
         customDialog.show();
         return observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<JsonElement>() {
@@ -84,13 +85,13 @@ public class ApiHandler {
 
                     @Override
                     public void onError(Throwable e) {
-                        customDialog.cancel();
+                        customDialog.hide();
                         getNonArrayResponseCallback.onError(new NetworkError(e));
                     }
 
                     @Override
                     public void onNext(JsonElement baseObservable) {
-                        customDialog.cancel();
+                        customDialog.hide();
                         getNonArrayResponseCallback.onSuccess(gson.fromJson(baseObservable, targetClass));
                     }
                 });

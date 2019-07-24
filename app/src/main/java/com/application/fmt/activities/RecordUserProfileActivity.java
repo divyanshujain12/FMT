@@ -56,17 +56,14 @@ public class RecordUserProfileActivity extends BaseActivity {
         }
 
         Uri outputFileUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", newfile);
-
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-
         startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == TAKE_PHOTO_CODE && resultCode == RESULT_OK) {
             uploadFileToServer();
         }
@@ -79,14 +76,8 @@ public class RecordUserProfileActivity extends BaseActivity {
             e.printStackTrace();
         }
         RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), newfile);
-
-
         MultipartBody.Part part = MultipartBody.Part.createFormData("profile_image", newfile.getName(), requestBody);
-        //requestBodyBuilder.addFormDataPart("profile_image", newfile.getName(), requestBody);
         RequestBody mobile = RequestBody.create(MediaType.parse("*/*"), "17147233172");
-
-        //requestBodyBuilder.addFormDataPart("mobile", "17147233172");
-
 
         subscription = ApiHandler.getInstance(getApplication()).uploadFile(CheckOnlyModel.class, part, mobile, new ApiHandler.GetNonArrayResponseCallback() {
             @Override

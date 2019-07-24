@@ -3,7 +3,9 @@ package com.application.fmt.Models;
 import android.app.Application;
 
 import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 
+import com.application.fmt.BR;
 import com.application.fmt.Constants.ErrorMessages;
 import com.application.fmt.utils.CommonFunctions;
 import com.google.gson.annotations.Expose;
@@ -38,13 +40,13 @@ public class User extends BaseObservable {
     private String otp;
 
 
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+
     }
 
     public String getEmail() {
@@ -95,12 +97,14 @@ public class User extends BaseObservable {
         this.authenticationToken = authenticationToken;
     }
 
+    @Bindable
     public String getOtp() {
         return otp;
     }
 
     public void setOtp(String otp) {
         this.otp = otp;
+        notifyPropertyChanged(BR.otp);
     }
 
     public boolean loginOtpValidation(Application app) {
